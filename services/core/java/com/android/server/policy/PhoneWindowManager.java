@@ -2740,6 +2740,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_CURRENT) == 1;
             if (doShowNavbar != mNavbarVisible) {
                 mNavbarVisible = doShowNavbar;
+                if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_DISABLE)) {
+                    mLineageHardware.set(LineageHardwareManager.FEATURE_KEY_DISABLE,
+                            mNavbarVisible);
+                }
             }
             updateNavigationBarSize();
 
@@ -9059,7 +9063,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     public boolean needsNavigationBar() {
-        return DUActionUtils.hasNavbarByDefault(mContext);
+        return !DUActionUtils.hasNavbarByDefault(mContext);
     }
 
     /*
